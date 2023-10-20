@@ -1,0 +1,457 @@
+\documentclass{article}
+\usepackage{amsmath,amssymb}
+\usepackage{bm}
+\usepackage{ctex,color}
+\usepackage[colorlinks,linkcolor=blue]{hyperref}
+\usepackage{enumerate}
+\usepackage{ntheorem}
+\usepackage{ulem}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{defination}{Def}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{example}{Example}[section]
+\newtheorem*{proof}{Proof}
+\newtheorem{remark}{Remark}[theorem]
+
+\begin{document}
+\section{Legal action under Lebesgue integration}
+	首先我们需要一些在Lebesgue积分下可以进行的操作，首先我们来看\textbf{Fubini}定理,对于这个定理，我们需要明白下面两点，
+	\begin{itemize}
+		\item 它准许我们交换积分条件
+		\item 该定理的使用条件是符号一致，或者$f(X,Y)$是可积的
+	\end{itemize}
+	\begin{theorem}
+		$X,Y$ is real valued, with induced measure $\mu_X,\mu_Y$, suppose $f:\mathcal{R}^2\to\mathcal{R}$, \textcolor{red}{is non-negative or $\mathbb{E}[|f(X, Y)|]<\infty$},then
+		\begin{equation*}
+			\begin{aligned}
+				\mathbb{E}[f(X, Y)] & =\int_{\mathbb{R}} \int_{\mathbb{R}} f(x, y) d \mu_X(x) d \mu_Y(y) \\
+				& =\int_{\mathbb{R}} \int_{\mathbb{R}} f(x, y) d _Y(y) d \mu_X(x)
+			\end{aligned}
+		\end{equation*}
+	\end{theorem}
+	通过\textbf{Fubini定理}，我们可以证明如下论断：$Y \geqslant 0, \mathbb{E} \left[Y^p\right]=\int_0^{+\infty} p y^{p-1} \mathbb{P}(Y>y) d y, p \geqslant 1$，证明如下:
+	\begin{proof}
+			For any \( Z \geqslant 0 \)
+		\[
+		z^P=\int_0^z p y^{p-1} d y=\int_0^{+\infty} p y^{p-1} 1\{y<z\} d y
+		\]
+		Now replace \( Z \) by \( Y \geqslant 0 \)
+		\[
+		\begin{aligned}
+			\mathbb{E}\left[Y^p\right] & =\mathbb{E}\left[\int_0^{+\infty} p y^{p-1} \mathbb{I}\{Y>y\} d y\right] \\
+			& \overset{Fubini}{=}\int_0^{+\infty} \mathbb{E}\left[p \cdot y^{p-1} \mathbb{I}\{Y>y\}\right] d y \\
+			& =\int_0^{+\infty} p \cdot y^{p-1} \mathbb{P}(Y>y) d y
+		\end{aligned}
+		\]
+	\end{proof}
+	第二步之所以能够使用\textbf{Fubini定理}的是因为$p \cdot y^{p-1} \mathbb{I}\{Y>y\}$始终大于0。\textcolor{red}{请注意}，如果使用分部积分的方法，你需要考虑一个$\underset{x\to\infty}{\lim}y^p\mathbb{P}(Y>y)$的式子，这个式子在$\mathbb{E}(Y^p)=\infty$时不一定趋于0，例如可以验证Cauchy分布的一阶中心距。所以如果要用分部积分的方法，还需要分$\mathbb{E}\left[Y^p\right]$是否趋于无穷，这是很麻烦的(\textcolor{red}{况且我还不知道如果$\mathbb{E}\left[Y^p\right]$趋于$\infty$怎么做})
+	\par 不过在这里值得一提的是，如果$\mathbb{E}(Y^{p})<\infty$,我们可以知道$\underset{x\to\infty}{\lim}y^p\mathbb{P}(Y>y)\to 0$,证明如下
+	\begin{proof}
+		For any \( y \geqslant 0 \)
+		\[
+		y^P \mathbb{I}\{Y>y\} \leqslant \mathbb{E} Y^P \mathbb{I}\{Y>y\} \leqslant Y^P
+		\]
+		because
+		\[
+		Y^P \mathbb{I}\{Y>y\} \stackrel{P}{\longrightarrow} 0
+		\]
+		then by \( D C T \)
+		\[
+		\mathbb{E}\left[y^P \mathbb{I}\{Y>y\}\right] \leqslant E\left[Y^P \mathbb{I}\{Y>y\}\right]=0
+		\]
+	\end{proof}
+在这里第二个式子和第三个式子用到了$p$阶矩小于$\infty$的条件。
+\par 再再再多说一点，即使$\mathbb{E}(Y^p)=\infty$，我们也不能判断$\underset{x\to\infty}{\lim}y^p\mathbb{P}(Y>y)$是否趋于无穷，这个式子也是可以趋于$0$的，比如可以考虑如下的概率分布函数，$P\left(X_i>x\right)=e / x \log x$。
+\par 总结一下这里讨论的内容
+\begin{itemize}
+	\item 无论在什么情况下$Y \geqslant 0, \mathbb{E} \left[Y^p\right]=\int_0^{+\infty} p y^{p-1} \mathbb{P}(Y>y) d y, p \geqslant 1$
+	\item $\mathbb{E}(Y^p)<\infty$,则$\underset{x\to\infty}{\lim}y^p\mathbb{P}(Y>y)\to 0$
+	\item $\underset{x\to\infty}{\lim}y^p\mathbb{P}(Y>y)\to 0$，也不能判断$\mathbb{E}(Y^p)$是否小于无穷
+\end{itemize}
+\textcolor{red}{未完待续...需要补充极限和积分交换的定理(控制收敛定理等)}
+\section{大数定律的证明和运用}
+在这里我们介绍大数定律的基本证明和运用方式，不同于高等统计，在这里我们关心why (in pure math) and how (in example with more mathematical meaning)
+\subsection{$L^2$ Weak Laws}
+这里的证明思路实在是太normal了，只要计算方差即可，不过这也是证明依概率收敛的一贯思路。在这里不再多说了
+\subsection{弱大数律(SLLN)}
+这里讨论了一种triangular的随机变量列\textbf{（Tiangular Arrays）}，我觉得就是随着$n$的增加，对$S_n=X_{n, 1}+\cdots+X_{n, n}$中的元素加一个随着$n$变化的条件罢了，可以对比一下之前大多数都是$X_i$的需要的性质都是固定的
+\[ \begin{aligned} 
+				& X_{1.1} \\ 
+				& X_{2.1}\quad X_{2.2} \\ 
+				& X_{3.1}\quad X_{3.2}\quad X_{3.3}\\
+				& \vdots \\
+				& X_{n.1}\quad X_{n.2}\quad \cdots\quad X_{n.3} 
+\end{aligned} \]
+接下来依据这个概念，我们来介绍相关定理
+\begin{theorem}
+	\label{triangular WLLN}
+	 Let $\mu_n=E S_n, \sigma_n^2=\operatorname{var}\left(S_n\right)$. If $\sigma_n^2 / b_n^2 \rightarrow 0$ then 
+	 \begin{equation*}
+	 	\frac{S_n-\mu_n}{b_n} \rightarrow 0 \quad\text{in probability}
+	 \end{equation*}
+\end{theorem}
+\begin{proof}
+	这个的证明也比较normal，只要计算方差就行
+\end{proof}
+\begin{remark}
+	\label{remark of triangular WLLN}
+	运用这个定理主要的困难就是计算方差来找到$b_n$，想要得到一个更加实用的结果的话我们需要找到一个$b_n$，满足$\frac{\mu_n}{b_n}\to c$，这样我们可以得到$\frac{S_n}{b_n}\stackrel{p}{\rightarrow}c$，具体的例子我们将在后面讨论。
+\end{remark}
+接下来我们考虑一个比较经典的方法，\textcolor{red}{截断法(Truncation)}，这意味着考虑这样的随机变量
+\begin{equation*}
+	\bar{X}=X 1_{(|X| \leq M)}= \begin{cases}X & \text { if }|X| \leq M \\ 0 & \text { if }|X|>M\end{cases}
+\end{equation*}
+接下里我们可以考虑截断法下的triangular r.v.
+\begin{theorem}[ Weak law for triangular arrays.]
+	\label{trucation WLLN}
+ For each $n$ let $X_{n, k}, 1 \leq k \leq n$, be independent. Let $b_n>0$ with $b_n \rightarrow \infty$, and let $\bar{X}_{n, k}=X_{n, k} 1_{\left(\left|X_{n, k}\right| \leq b_n\right)}$. Suppose that as $n \rightarrow \infty$\\
+		(i) $\sum_{k=1}^n P\left(\left|X_{n, k}\right|>b_n\right) \rightarrow 0$, and
+		\\(ii) $b_n^{-2} \sum_{k=1}^n E \bar{X}_{n, k}^2 \rightarrow 0$.\\
+		If we let $S_n=X_{n, 1}+\ldots+X_{n, n}$ and put $a_n=\sum_{k=1}^n E \bar{X}_{n, k}$ then\\ $\left(S_n-a_n\right) / b_n \rightarrow 0$ in probability
+\end{theorem}
+\begin{proof}
+	证明也是十分简单的,令$
+	\bar{S}_n=\bar{X}_{n, 1}+\cdots+\bar{X}_{n, n}
+	$,只需要注意到分解
+	$$P\left(\left|\frac{S_n-a_n}{b_n}\right|>\epsilon\right) \leq P\left(S_n \neq \bar{S}_n\right)+P\left(\left|\frac{\bar{S}_n-a_n}{b_n}\right|>\epsilon\right)$$
+	
+	前一项因为条件(\textit{i})规定的尾概率趋于0，后一项被条件\textit{(ii)}规定的方差控制住趋于0.
+\end{proof}
+\begin{remark}
+	这个定理的说明了只要尾概率不是太大，就能被控制住，当然这里解决了定理\ref{triangular WLLN}中$\mu_n$不存在的问题，你可以吧$\mu_n$替换成truncation之后的$a_n$就行了，至于一个合适的$b_n$所需要的和定理\ref{triangular WLLN}的\textbf{remark}中讨论的一样
+\end{remark}
+有了这个定理之后，我们可以得到关于i.i.d的弱大数定理的一个比较优美的条件，这个条件也比较符合直观，即只要尾概率不是太大，就可以收敛
+\begin{theorem}[Weak law of large numbers]
+	\label{Weak law of large numbers}
+	Let $X_1, X_2, \ldots$ be i.i.d. with
+	$$
+	x P\left(\left|X_i\right|>x\right) \rightarrow 0 \quad \text { as } x \rightarrow \infty
+	$$
+	Let $S_n=X_1+\cdots+X_n$ and let $\mu_n=E\left(X_1 1_{\left(\left|X_1\right| \leq n\right)}\right)$. Then $S_n / n-\mu_n \rightarrow 0$ in probability.
+\end{theorem}
+\begin{proof}
+	我们只需要验证定理\ref{trucation WLLN}中的两个条件就可以了，这里很显然$b_n=n$\\
+	对于\textit{(i)}$\Leftrightarrow nP(|X_1|>n)$，这是显然成立的。\\
+	对于\textit{(ii)}，利用之前的论断$Y \geqslant 0, \mathbb{E} \left[Y^p\right]=\int_0^{+\infty} p y^{p-1} \mathbb{P}(Y>y) d y, p \geqslant 1$，我们有
+	\begin{equation*}
+		E\left(\bar{X}_{n, 1}^2\right) / n=\frac{1}{n} \int_0^n 2 y P\left(\left|X_1\right|>y\right) d y
+	\end{equation*}
+	因为这相当于对$y P\left(\left|X_1\right|>y\right)$求平均，而这个趋于0，所以我们可以验证\textit{(ii)}。具体的证明手段可以分成两种
+	\begin{enumerate}
+		\item 对于$\forall \epsilon$，分成两段，当$x>M$时，$x P\left(\left|X_i\right|>x\right)<\epsilon$，当$x<M$时，利用$\frac{1}{n}$去控制
+		\item 或者直接$g(y)=2 y P\left(\left|X_1\right|>y\right)$且$g_n(y)=g(ny)$，则$\lim\limits_{n\to \infty}g_n(y)=0$，之后利用控制收敛定理
+		\begin{equation*}
+			(1 / n) \int_0^n g(y) d y=\int_0^1 g_n(x) d x \rightarrow 0
+		\end{equation*}
+	\end{enumerate}
+\end{proof}
+\begin{remark}
+	定理\ref{Weak law of large numbers}中的假设是使得满足$\frac{S_N}{n}-a_n\to 0$存在的必要条件，具体可见Feller(1971)
+\end{remark}
+接下来我们来举一个例子来具体说明\textbf{remark}\ref{remark of triangular WLLN}中的意思以及大数定律一些更广泛的运用
+\begin{example}
+	假设$X_1,X_2,\cdots$是一些独立的随机变量列满足
+	\begin{equation*}
+		P(X_i=2^j)=2^{-j}
+	\end{equation*}
+可以想象现在有一场赌博游戏，你可以得到$2^j$元如果你扔出j次硬币猜得到正面，很容易观察到$EX_1=\infty$,这样我们没法直接要求赌徒每局都支付这个随机变量的期望的钱数，但是利用定理\ref{trucation WLLN}，我们可以得到$S_n$的渐近行为，并得到一个与$n$有关的需要付的钱数
+\par 即我们现在需要构造
+\begin{equation*}
+	\frac{S_n-a_n}{b_n}\to 0
+\end{equation*}
+当然我们希望在这里挑选一个合适的$b_n$，使得$\frac{a_n}{b_n}$趋于一个常数$c$，这样我们可以得到$\frac{S_n}{cb_n}\to 1$，这样我们按照$n$局游戏收费$cb_n$元也算公平。在这里我们需要注意两点
+\begin{itemize}
+	\item 一个过于大的$b_n$是没有用的，例如大到$\lim\limits_{n\to\infty}\frac{a_n}{b_n}=0$致使我们最后得到$\frac{S_n}{b_n}\to 0$这是没啥信息的，我们只知道$S_n=o(b_n)$
+	\item 这里的“公平”和期望那种“公平”还是有些许不一样，毕竟期望那种是相减是0，$\frac{S_n}{n}-\mu_n\to 0$，最后即使亏一块钱的概率都是很小的(?)，但是这里是比值趋于1，这个结论更多的是在描述速率，这个结论推不出上面的相减为0，(反例是显然的)，但是相减为0加上$\lim\limits_{n\to \infty}b_n\ne0$可以推出相除为1
+\end{itemize}
+所以我们为了找到这样的$b_n$，我们可以去代入定理\ref{trucation WLLN}中的条件(i)(ii)再加上$\frac{a_n}{b_n}\to 1$，为了方便，我们可以记$b_n=2^m$，则满足(i)(ii)$\Leftrightarrow2^{-m}n\to 0$，计算得到$a_n=nm$，所以$\frac{a_n}{b_n}\to 1\Leftrightarrow \frac{nm}{2^m}\to 1$，总的来说我们需要找到这样一个m，使得
+\begin{align}
+	\frac{n}{2^m}\to 0 \\
+	\frac{nm}{2^m}\to 1
+\end{align}
+令$n \cdot 2^{-m} =s(n)$，则$m=\log n-\log s(n)$，那么条件（2）就变成了
+\begin{equation*}
+	\frac{s(n)[n \cdot \log (n)-\log s(n)]}{n}\to 1\quad\quad s(n)\to 0
+\end{equation*}
+观察一下，取$s(n)=\frac{1}{\log n}$即可，不过这里可以再进一步精细一下使得m是个整数，强行用$\sup$规定一下就行，再代入原式我们就可以得到
+\begin{equation*}
+	\frac{\sum_{k=1}^nX_k}{n\log n}\to 1
+\end{equation*}
+这里都是以2为底的log，当一个赌徒玩n局游戏时，我们可以收$n\log n$的费用来保证"公平"
+\end{example}
+\subsection{强大数律(SLLN)}
+首先我们一上来就介绍的是\textbf{Borel-Cantelli lemmas}，在介绍这个lemma之前，我们需要辨析几个极限的概念
+\par 首先是事件的极限，分为事件的上极限和下极限，
+\begin{defination}
+	事件的上极限的定义是
+$$
+\limsup A_n=\cap_{m\to\infty}\cup_{n=m}^{\infty} A_n=\lim _{m \rightarrow \infty} \cup_{n=m}^{\infty} A_n=\left\{\omega \text { that are in infinitely many } A_n\right\}
+$$
+	事件的下极限的定义是
+	$$
+	\liminf A_n=\cup_{m\to\infty}\cap_{n=m}^{\infty} A_n=\lim _{m \rightarrow \infty} \cap_{n=m}^{\infty} A_n=\left\{\omega \text { that are in all but finitely many } A_n\right\}
+	$$
+\end{defination}
+翻译一下这两句英文，上极限的样本点就是指那些会无限出现在事件列的样本点，但可能也有无穷多的事件不包含这些样本点哦；下极限的样本点就是指那些在某个事件之后（maybe很大的M），所有的事件都包含的样本点。
+\par 接下来我们对比一下数列的极限和随机变量的极限，避免之后犯迷糊。
+\begin{defination}
+	数列$\{a_n\}$的上极限是指
+	$$
+	\limsup _{n \rightarrow \infty} x_n=\inf _{n \geq 0} \sup _{k \geq n} x_k=\inf \left\{\sup \left\{x_k: k \geq n\right\}: n \geq 0\right\}
+	$$
+	或者
+	$$
+	\limsup _{n \rightarrow \infty} x_n=\lim _{n \rightarrow \infty}\left(\sup _{m \geq n} x_m\right)
+	$$
+	数列$\{a_n\}$的下极限是指
+	$$
+	\liminf _{n \rightarrow \infty} x_n=\sup _{n \geq 0} \inf _{k \geq n} x_k=\sup \left\{\inf \left\{x_k: k \geq n\right\}: n \geq 0\right\}
+	$$
+	或者
+	$$
+	\liminf _{n \rightarrow \infty} x_n=\lim _{n \rightarrow \infty}\left(\inf _{m \geq n} x_m\right)
+	$$
+\end{defination}
+至于随机变量的上下极限，就是你把$X_n({\omega})$看成数列，然后照数列的上下极限处理就行。可以看到这些上下极限的定义是很像的，但是还是要看清到底是随机变量的极限还是事件的极限，不然有些地方理解起来特别难受。
+\par 接下来我们需要介绍Borel-cantelli引理，
+\begin{theorem}[Borel-Cantelli lemma]
+	If $\sum_{n=1}^{\infty} P\left(A_n\right)<\infty$ then
+	$$
+	P\left(A_n \text { i.o. }\right)=0 .
+	$$]
+	If $\sum_{n=1}^{\infty} P\left(A_n\right)<\infty$ then
+	$$
+	P\left(A_n \text { i.o. }\right)=0 .
+	$$
+\end{theorem}
+\begin{proof}
+	证明只需要计算$N=\sum_k 1_{A_k}$的期望即可。\\
+	或者我们给出一个Intuitive的想法，如果$P\left(A_n\right.$ i.o. $)\ne0$，那么就有一个有概率测度的事件/区间$B_n$一直出现在事件列中，那么$P\left(A_n\right)\geq \infty\times P(B_n)=\infty$，这肯定不成立了\textcolor{red}{，所以有的时候我们只需要去说明$P(A_n)$收敛的够快就行了}
+\end{proof}
+\begin{remark}
+	这是一个涉及到了事件上极限的引理，如果咱们回顾几乎处处收敛的定义，我们会发现他就是用数列上极限定义的，所以这个定理主要是用来证明几乎处处收敛的，(\textcolor{red}{截止到第6次课，Borel-Cantelli引理和单调的随机变量列的“两面夹芝士”法是唯二的证明几乎处处收敛的方法})
+\end{remark}
+下面这个例子是一个利用Borel-Cantelli引理证明几乎处处收敛的例子，并且用到了上面说的收敛够快的思想
+\begin{theorem}
+	\label{application of Borel 1th lemma}
+	$X_n \rightarrow X$ in probability if and only if for every subsequence $X_{n(m)}$ there is a further subsequence $X_{n\left(m_k\right)}$ that converges almost surely to $X$.
+\end{theorem}
+\begin{proof}
+	 Let $\epsilon_k$ be a sequence of positive numbers that $\downarrow 0$. For each $k$, there is an $n\left(m_k\right)>n\left(m_{k-1}\right)$ so that $P\left(\left|X_{n\left(m_k\right)}-X\right|>\epsilon_k\right) \leq 2^{-k}$. Since
+	$$
+	\sum_{k=1}^{\infty} P\left(\left|X_{n\left(m_k\right)}-X\right|>\epsilon_k\right)<\infty
+	$$
+	the Borel-Cantelli lemma implies $P\left(\left|X_{n\left(m_k\right)}-X\right|>\epsilon_k\right.$ i.o. $)=0$, i.e., $X_{n\left(m_k\right)} \rightarrow X$ a.s. To prove the second conclusion, we note that if for every subsequence $X_{n(m)}$ there is a further subsequence $X_{n\left(m_k\right)}$ that converges almost surely to $X$ then we can apply the next lemma to the sequence of numbers $y_n=P\left(\left|X_n-X\right|>\delta\right)$ for any $\delta>0$ to get the desired result.
+\end{proof}
+这里相当于给$P\left(\left|X_{n\left(m_k\right)}-X\right|\right)$设定的收敛速度是$2^{-k}$，\textcolor{red}{当然这里构造了一个向下递减的$\epsilon_k$也很有意思}，如果你根据一个固定的$\epsilon$去挑选$m_k$，那么每个$\epsilon$挑选出来的$m_k$是不一样的，这样就没法说$\epsilon$的任意性了
+\begin{theorem}
+	Let $X_1, X_2, \ldots$ be i.i.d. with $E X_i=\mu$ and $E X_i^4<\infty$. If $S_n=X_1+\cdots+X_n$ then $S_n / n \rightarrow \mu$ a.s.
+\end{theorem}
+\begin{proof}
+	这里就是利用四阶矩给$P(|S_n>n\epsilon)$构造了一个$\frac{1}{n^2}$的收敛速率
+\end{proof}
+在这个定理阐述的最后，我再多提一件我在课上讨论出来但是回顾的时候发现也没有用到的讨论，那就是证明$	P\left(A_n \text { i.o. }\right)=0$能证明这个事件在$n$足够大时几乎不发生，但是$P\left(A_n \text { i.o. }\right)=1$，却不能说明$n$足够大时，后面的都发生。
+\par 接下来我们介绍Borel-Cantelli第二引理，这个引理对$P\left(A_n \text { i.o. }\right)=1$给出了一个充分条件
+\begin{theorem}[The second Borel-Cantelli lemma]
+	If the events $A_n$ are independent then $\sum P\left(A_n\right)=\infty$ implies $P\left(A_n\right.$ i.o. $)=1$.
+\end{theorem}
+\begin{proof}
+	主要是利用$1-x\leq e^{-x}$，弄成$\prod_{n=M}^N\left(1-P\left(A_n\right)\right) \leq \prod_{n=M}^N \exp \left(-P\left(A_n\right)\right)$，这样就转换到了$\sum P(A_n)$上
+\end{proof}
+\begin{remark}
+	这个定理的基本思想是这样的，如果有一个事件/区间$B_n$不属于$A_n$的上极限，这就意味着在某个m之后一直到无穷，他就再也不出现了，他的概率起码小于$P\left(\cap_{n=M}^\infty A_n^c\right)$，因为规定了$\sum P\left(A_n\right)=\infty$的这样一个速率，所以直观上前面这个概率$P\left(\cap_{n=M}^\infty A_n^c\right)$越乘越小趋于0
+\end{remark}
+\par 下面这个定理是Borel-Cantelli引理的应用，他揭示了大数定律中$E\left|X_i\right|\leq\infty$对于$\mu_n$存在是必要的。
+\begin{theorem}
+	 If $X_1, X_2, \ldots$ are i.i.d. with $E\left|X_i\right|=\infty$, then $P\left(\left|X_n\right| \geq\right.$ $n$ i.o. $)=1$. So if $S_n=X_1+\cdots+X_n$ then $P\left(\lim S_n / n\right.$ exists $\left.\in(-\infty, \infty)\right)=$ 0 .
+\end{theorem}
+\begin{proof}
+	利用
+	$$
+	E\left|X_1\right|=\int_0^{\infty} P\left(\left|X_1\right|>x\right) d x \leq \sum_{n=0}^{\infty} P\left(\left|X_1\right|>n\right)
+	$$
+	加上Borel-Cantelli第二引理得到$P\left(\left|X_n\right| \geq\right.$ $n$ i.o. $)=1$，接着导出
+	$$
+	\left|\frac{S_n}{n}-\frac{S_{n+1}}{n+1}\right|>2 / 3 \quad \text { i.o. }
+	$$
+	那么这个集合和$C \equiv\left\{\omega: \lim _{n \rightarrow \infty} S_n / n \text { exists } \in(-\infty, \infty)\right\}$的交集就是空集，这就导出了$P(C)=0$
+\end{proof}
+下面这个定理不仅说明了$P\left(A_n \text { i.o. }\right)=1$($\Leftrightarrow \sum_{m=1}^n 1_{A_m}=\infty$),还说明趋于$\infty$的速度
+\begin{theorem}[两面夹芝士法]
+	 If $A_1, A_2, \ldots$ are pairwise independent and $\sum_{n=1}^{\infty} P\left(A_n\right)=$ $\infty$ then as $n \rightarrow \infty$
+	$$
+	\sum_{m=1}^n 1_{A_m} / \sum_{m=1}^n P\left(A_m\right) \rightarrow 1 \quad \text { a.s. }
+	$$
+\end{theorem}
+\begin{proof}
+	我们分三步梳理一下这个证明
+	\begin{description}
+		\item[Step 1] 说明$\sum_{m=1}^n 1_{A_m}=\infty$依概率收敛，这一步是为了给后面安插概率方便
+		\item[step 2] 令$n_k=\inf\{n:ES_n\geq k^2\}$ and $T_k=S_{nk}$，因为这是示性函数，所以我们有$k^2\leq ET_k\leq k^2+1$，那么我们可以得到
+		$$
+		P\left(\left|T_k-E T_k\right|>\delta E T_k\right) \leq 1 /\left(\delta^2 k^2\right)
+		$$
+		这样我们可以得到$T_{k}$几乎处处收敛
+		\item[Step 3]接下来利用递增这个性质，我们可以得到$\frac{T_k(\omega)}{E T_{k+1}} \leq \frac{S_n(\omega)}{E S_n} \leq \frac{T_{k+1}(\omega)}{E T_k}$
+		这样就把$\frac{S_n(\omega)}{ES_n}$“夹”住了，接下来我们做一步转换
+		$$
+		\frac{E T_k}{E T_{k+1}} \cdot \frac{T_k(\omega)}{E T_k} \leq \frac{S_n(\omega)}{E S_n} \leq \frac{T_{k+1}(\omega)}{E T_{k+1}} \cdot \frac{E T_{k+1}}{E T_k}
+		$$
+		接下来我们只需要证明$ET_{k+1}/ET_k\to 1$即可，这是显然的因为
+		$$
+		k^2 \leq E T_k \leq E T_{k+1} \leq(k+1)^2+1
+		$$
+	\end{description}
+\end{proof}
+	\begin{remark}
+		对于这个定理，我们从意义和证明方法上给一些注释
+		\begin{enumerate}
+			\item 根据大数定律，$\sum_{m=1}^n 1_{A_m} / \sum_{m=1}^n P\left(A_m\right)\left(1-P\left(A_m\right)\right) \rightarrow \infty $
+			\item $\sum_{m=1}^n 1_{A_m}(\omega)$这个东西可以看做是样本点$\omega$在事件列中出现的频率，这个定理相当于给这个频率进行了一个刻画
+			\item 相比于定理\ref{application of Borel 1th lemma}，这里挑选$n_k$的方式更加细腻，有点像手动挑选的感觉，这是为了给$ET_k$找到上下界，之后才能证明$E T_{k+1} / E T_k \rightarrow 1$
+			\item 对于一个递增的数列$X_n$，我们想要证明$X_n/c_n\to 1$，我们需要找到$c_{nk}$ where $c_{n(k+1)}/c_{n(k)}\to 1$
+			\item 这里能找到这样的$c_{n(k)}$，有一个上界$(k+1)^2+1$,主要运用了示性函数和$P{A_m}$都不大于1的特性，像在\textbf{Exercise 2.3.19}中，就需要泊松分布的可加性来使得$\lambda_i<1$来保证步子不会迈的太大
+		\end{enumerate}
+	\end{remark}
+接下来我们正式证明强大数律
+\begin{theorem}[Strong law of large numbers]
+Let $X_1, X_2, \ldots$ be pairwise independent identically distributed random variables with $E\left|X_i\right|<$ $\infty$. Let $E X_i=\mu$ and $S_n=X_1+\ldots+X_n$. Then $S_n / n \rightarrow \mu$ a.s. as $n \rightarrow \infty$.
+\end{theorem}
+\begin{proof}
+	主要的证明步骤也是三步（怎么都是三步，很难不让人怀疑这是不是在嗯蹭欧几里得的三段式,$Y_k=X_k\mathbb{I}\{|X_k|<k\}$
+	\begin{description}
+		\item[Step 1] 我们需要证明$\frac{|S_n-T_n|}{n}\to 0 \quad a.s.$，这是一个$P(X_k\ne Y_k \quad i.o.)=0$的一个推论
+		\item[step 2] 接下来我们需要证明这么一个东西
+		$$\sum_{k=1}^{\infty} \operatorname{var}\left(Y_k\right) / k^2 \leq 4 E\left|X_1\right|<\infty$$
+		这个东西看上去还是很神奇的，毕竟是低阶矩控制住了高阶矩，但实际上我们可以用离散分布中的一个点来给一个比较intuitive的观点，假设在一个离散分布中 $ P(X=k)=p_k$，那么在$\sum_{k=1}^{\infty} \operatorname{var}\left(Y_k\right)$这个k的贡献就是
+		$$\sum_{K>k}^{\infty} p_k k^2 \cdot \frac{1}{K^2}=p_k k\sum_{K>k}^{\infty}\frac{k}{K^2}$$
+		那么后面这个summation求和出来肯定是被bound住的，你再把所有的k都求和就能更清晰了。
+		\par 再往深点说这就是那个技巧：当X<M时，$E(X^2)<ME(X)$
+		\par 再再再往深点说，你把这个X压到[0,1]之间，再平方是会变小的，不过小的数求和多，大的数求和少就就会被一阶矩控制住（其实你把连续按照整数点分段就和离散的情况一样了）
+		\item[Step 3] 接下来就是经典的两面夹芝士法了，关键就是找到这个子列是吧，这里找的这个子列k(n)=$\lceil\alpha^n\rceil$，找这个子列有什么好处呢，就是你可以用上下极限去控制$\frac{k(n)}{k(n+1)}$，而不是直接$\frac{k(n)}{k(n+1)}=1$，
+		好吧这个东西还是很妙的，不仅控制住了summation，还控制住了$\frac{k(n)}{k(n+1)}$
+		\\
+%		当然如果我们取$k(n)=n^2$貌似也是能做的，
+		\textcolor{red}{当然这里我们可以取别的$k(n)$也可以做，（我个人觉得），例如取$k(n)=\lceil\frac{n^2}{EX}\rceil+1$，这样我们可以bound住$k(n)$ by $\frac{n^2}{EX}-1\leq k(n)\leq k(n+1)\leq\frac{(n+1)^2}{EX}+1 $，当然这实际上是取了
+		$$k(n)=\inf\{k:E(S_k)>n^2\}$$}
+	\textcolor{red}{!!!!注意这里标红的地方全写错了，根本原因是计算错了$\sum_{n:k(n)>j}\frac{1}{k(n)^2}$如果这样取的话这个summation算出来$\sim \frac{1}{j}$}，你把$k(n)$整体考虑，你就会发现这个取多项式肯定是不行的
+	\par 总的来说，这个$k(n)$的选取应该满足两个条件
+	\begin{itemize}
+		\item 可以控制住$\frac{k(n+1)}{k(n)}$
+		\item $\sum_{n:k(n)>j}\frac{1}{k(n)^2}$至少要是$j^{-2}$的阶数
+	\end{itemize}
+	所以这个取法还是很妙的，暂时也没有什么intuitive的解释，之后无非就是利用上下极限来控制住$\frac{k(n+1)}{K(n)}$
+	\end{description}
+\end{proof}
+接下来，依托大数定律讲了三个例子和应用，也是比较常见的，首先是更新定理的一个例子
+\begin{example}[Renewal theory]
+Let $X_1, X_2, \ldots$ be i.i.d. with $0<$ $X_i<\infty$. Let $T_n=X_1+\ldots+X_n$ and think of $T_n$ as the time of $n$th occurrence of some event. For a concrete situation, consider a diligent janitor who replaces a light bulb the instant it burns out. Suppose the first bulb is put in at time 0 and let $X_i$ be the lifetime of the $i$ th light bulb. In this interpretation, $T_n$ is the time the $n$th light bulb burns out and $N_t=\sup \left\{n: T_n \leq t\right\}$ is the number of light bulbs that have burnt out by time $t$.
+\par If $E X_1=\mu \leq \infty$ then as $t \rightarrow \infty$,
+	$$
+	N_t / t \rightarrow 1 / \mu \quad \text { a.s. } \quad(1 / \infty=0)
+	$$
+\end{example}
+这个东西只需要观察到$\frac{T\left(N_t\right)}{N_t} \leq \frac{t}{N_t} \leq \frac{T\left(N_t+1\right)}{N_t+1} \cdot \frac{N_t+1}{N_t}$，然后两边用一下大数定律一夹就OK了
+\par 下一个定理说明的是经验过程的收敛性
+\begin{theorem}[The Glivenko-Cantelli theorem]
+Let $X_1, X_2, \ldots$ be i.i.d. with distribution $F$ and let
+	$$
+	F_n(x)=n^{-1} \sum_{m=1}^n 1_{\left(X_m \leq x\right)}
+	$$
+	Then as $n \rightarrow \infty$, $\sup \left|F_n(x)-F(x)\right| \rightarrow 0 \quad$ a.s.
+\end{theorem}
+\begin{proof}
+	证明这个，首先要做的是分点，记$x_{j, k}=\inf \{y: F(y) \geq j / k\}$，那么当n足够大时
+	$$\left|F_n\left(x_{j, k}\right)-F\left(x_{j, k}\right)\right|<k^{-1} \quad \text { and } \quad\left|F_n\left(x_{j, k}-\right)-F\left(x_{j, k}-\right)\right|<k^{-1}$$
+	在这里之所以要引入右极限是因为，只用第一个界是控制不住的，因为我们没发控制$\left|F_n\left(x_{j, k}\right)-F_n\left(x_{j-1, k}\right)\right|$导致没法控制住$F(x)$，引入右极限之后我们可以得到
+	$$
+	F\left(x_{j, k}-\right)-F\left(x_{j-1, k}\right) \leq k^{-1}
+	$$
+	这样的话我们就可以通过$F\left(x_{j-1, k}\right)\leq F(x)\leq F\left(x_{j, k}-\right)$来控制了
+\end{proof}
+\subsection{随机序列的收敛性}
+其实我也不懂什么叫随机序列的收敛，感觉这一节就是介绍了一些关于科尔戈莫洛夫（Kolmogorov）的一些结论，然后从另一方面证明了强大数律。首先是这个神奇的定理
+\begin{theorem}[Kolmogorov's maximal inequality]
+	\label{maxbound}
+Suppose $X_1, \ldots, X_n$ are independent with $E X_i=0$ and $\operatorname{var}\left(X_i\right)<\infty$. If $S_n=X_1+\cdots+X_n$ then
+	$$
+	P\left(\max _{1 \leq k \leq n}\left|S_k\right| \geq x\right) \leq x^{-2} \operatorname{var}\left(S_n\right)
+	$$
+\end{theorem}
+这个定理神奇就神奇在右边这个界通常是$P(|S_n|>x)$的，但是我们发现右边这个界还可以对所有的$|S_k|,k<n$都进行控制。
+\begin{proof}
+	证明相当于是计算$ES_n^2$的时候把它分到n个不交的的事件$A_k=\left\{\left|S_k\right| \geq x\right.$ but $\left|S_j\right|<x$ for $\left.j<k\right\}$上计算，然后在这n个不交的时间上我们做分解$(S_n-S_k+S_k)^2$，我们发现在这些时间上交叉项算出来是0（有点像鞅），主项算出来是
+	$$
+	\sum_{k=1}^n \int_{A_k} S_k^2 d P \geq \sum_{k=1}^n x^2 P\left(A_k\right)=x^2 P\left(\max _{1 \leq k \leq n}\left|S_k\right| \geq x\right)
+	$$
+	然后把$x^2$除过去就行了
+\end{proof}
+接下里我们要得到一个关于序列收敛的定理，当然这里可以是收敛到无穷，证明的手法是柯西收敛定理
+\begin{theorem}
+	Suppose $X_1, X_2, \ldots$ are independent and have $E X_n=$ 0 . If
+	$$
+	\sum_{n=1}^{\infty} \operatorname{var}\left(X_n\right)<\infty
+	$$
+	then with probability one $\sum_{n=1}^{\infty} X_n(\omega)$ converges.
+\end{theorem}
+\begin{proof}
+	这个东西的证明思路就是$w_M=\sup _{m, n \geq M}\left|S_m-S_n\right|$趋于0 almost surely，再详细一点，（简易理解版，具体还是极限）这就是说存在一个空间$\Omega_0,P(\Omega_0)=1$，在这个空间上所有的样本点上$\omega_M\to 0$,这就代表着这个空间样本点上，这个summation都是收敛的。证明$w_M=\sup _{m, n \geq M}\left|S_m-S_n\right|$趋于0 almost surely的思路就是，首先利用定理\ref{maxbound}得到
+	$$
+	P\left(\sup _{m \geq M}\left|S_m-S_M\right|>\epsilon\right) \leq \epsilon^{-2} \sum_{n=M+1}^{\infty} \operatorname{var}\left(X_n\right) \rightarrow 0 \quad \text { as } M \rightarrow \infty
+	$$
+	然后利用$w_M<2\sup _{m \geq M}\left|S_m-S_M\right|$，我们就可以得到
+	$$
+	P\left(w_M>2 \epsilon\right) \leq P\left(\sup _{m \geq M}\left|S_m-S_M\right|>\epsilon\right) \rightarrow 0
+	$$
+	然后我们利用$w_M$递减的性质，我们就可以得到
+	$$
+	P(\cap_{m\to\infty}\cup_{n=m}\{w_n>\epsilon\})=\lim_{m\to\infty}P(\cup_{n=m}\{w_n>\epsilon\})=\lim_{m\to\infty}P\{w_m>\epsilon\}=0
+	$$
+\end{proof}
+接下来是一个很像强大数律的定理，但是得到的结论是收敛，不过和下面那个\textbf{Kronecker's Lemma}结合，我们可以很快得到一个弱化版的强大数律
+\begin{theorem}[Kolmogorov's three-series theorem]
+	  Let $X_1, X_2, \ldots$. be independent. Let $A>0$ and let $Y_i=X_i 1_{\left(\left|X_i\right| \leq A\right)}$. In order that $\sum_{n=1}^{\infty} X_n$ converges a.s., it is necessary and sufficient that
+	(i) $\sum_{n=1}^{\infty} P\left(\left|X_n\right|>A\right)<\infty$
+	(ii) $\sum_{n=1}^{\infty} E Y_n$ converges, $\sum_{n=1}^{\infty} \operatorname{var}\left(Y_n\right)<\infty$
+\end{theorem}
+这个定理有了前面的铺垫之后，充分性就是显然的，必要性之后再证。接下里是这个\textbf{Kronecker's Lemma}
+\begin{theorem}[Kronecker's lemma]
+	\label{kronecker}
+  If $a_n \uparrow \infty$ and $\sum_{n=1}^{\infty} x_n / a_n$ converges then
+	$$
+	a_n^{-1} \sum_{m=1}^n x_m \rightarrow 0
+	$$
+\end{theorem}
+\begin{proof}
+	如果我们令$b_m=\sum_{k=1}^{m}\frac{x_k}{a_k}$，我们就可以得到
+	$$a_n^{-1}\sum_{m=1}^{n}x_m=b_n-\sum_{m=1}^{n}\frac{a_m-a_{m-1}}{a_n}b_{m-1}$$
+	把后面这个东西看成一个加权求和，下标较大的部分$b_{m-1}$接近于极限，权重求和为$1-\frac{a_M}{a_n}$接近于1（因为$a_n\uparrow \infty$），下标较小的部分权重求和接近于0,这就证明完了
+\end{proof}
+这个定理的意思就是你把收敛的数列的分母都换成最大的那个就会趋于0，然后利用这个定理，我们就可以得到下面这个需要iid的大数定律
+\begin{theorem}[The strong law of large numbers]
+  Let $X_1, X_2, \ldots$ be i.i.d. random variables with $E\left|X_i\right|<\infty$. Let $E X_i=\mu$ and $S_n=$ $X_1+\ldots+X_n$. Then $S_n / n \rightarrow \mu$ a.s. as $n \rightarrow \infty$.
+\end{theorem}
+\begin{proof}
+	证明前面truncation的东西都是和原始那个一样的，那如果我们令$Z_k=\frac{Y_k-EY_k}{k}$的话，我们可以计算方差得到$\sum_{k=1}^{\infty}Z_k$收敛，所以根据定理\ref{kronecker}，我们就可以得到
+	$$
+	n^{-1} \sum_{k=1}^n\left(Y_k-E Y_k\right) \rightarrow 0 \quad \text { and hence } \quad \frac{T_n}{n}-n^{-1} \sum_{k=1}^n E Y_k \rightarrow 0 \text { a.s. }
+	$$
+\end{proof}
+——————————分割线—————————————\\
+考虑一系列独立同分布的随机变量 $\{X_n\}$，其中每个随机变量 $X_n$ 服从均匀分布 $U(-n, n)$。
+这个序列的特征函数是
+\[
+\phi_n(t) = \frac{\sin(nt)}{nt},
+\]
+当 $n \to \infty$ 时，$\phi_n(t)$ 对于所有 $t \neq 0$ 都收敛到0。但是，当 $t = 0$ 时，$\phi_n(0) = 1$ 对于所有的 $n$ 都成立。
+
+所以在这个例子中，我们可以说 $\phi_n(t)$ 在 $t = 0$ 处不收敛，而在 $t \neq 0$ 处收敛到0。这种情况说明了特征函数的逐点收敛并不一定意味着对应的概率分布序列会弱收敛。\\
+——————————分割线—————————————
+
+
+
+
+
+
+\end{document}
